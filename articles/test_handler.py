@@ -1,6 +1,7 @@
 import unittest
 import os
-from handler import get_articles_host, get_article_uri
+from unittest.mock import patch, MagicMock
+from handler import get_articles_host, get_article_uri, fetch_article
 
 
 class TestHandler(unittest.TestCase):
@@ -19,6 +20,21 @@ class TestHandler(unittest.TestCase):
         os.environ["ARTICLES_HOST"] = "articles.example.com"
         result = get_article_uri("12345")
         self.assertEqual(result, "https://articles.example.com/articles/12345.html?ref=rss")
+        del os.environ["ARTICLES_HOST"]
+
+    @patch('handler.urllib.request.urlopen')
+    def test_fetch_article_returns_response_content(self, mock_urlopen):
+        os.environ["ARTICLES_HOST"] = "articles.example.com"
+        mock_response = MagicMock()
+        mock_response.read.return_value = b'<html>Article content</html>'
+        mock_response.__enter__ = MagicMock(return_value=mock_response)
+        mock_response.__exit__ = MagicMock(return_value=False)
+        mock_urlopen.return_value = mock_response
+
+        result = fetch_article("12345")
+
+        self.assertEqual(result, '<html>Article content</html>')
+        mock_urlopen.assert_called_once_with("https://articles.example.com/articles/12345.html?ref=rss")
         del os.environ["ARTICLES_HOST"]
 
 
