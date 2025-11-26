@@ -34,5 +34,5 @@ jobs:
       - name: Deploy to AWS Lambda
         uses: aws-actions/aws-lambda-deploy@v1
         with:
-          function-name: ${{ vars.ARTICLES_FUNCTION_NAME }}
+          function-name: far-beyond-the-rising-sun-get-article
           zip-file: function.zip
