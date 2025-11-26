@@ -3,7 +3,7 @@ import os
 
 
 def get_articles_host():
-    return os.environ.get("ARTICLES_HOST")
+    return os.environ.get("ARTICLES_HOST", "example.com")
 
 
 def get_article_uri(id):
