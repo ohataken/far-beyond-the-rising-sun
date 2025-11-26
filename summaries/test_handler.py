@@ -1,6 +1,6 @@
 import unittest
 import os
-from handler import get_summaries_host
+from handler import get_summaries_host, get_summary_uri
 
 
 class TestHandler(unittest.TestCase):
@@ -16,6 +16,12 @@ class TestHandler(unittest.TestCase):
         if "SUMMARIES_HOST" in os.environ:
             del os.environ["SUMMARIES_HOST"]
         self.assertIsNone(get_summaries_host())
+
+    def test_get_summary_uri_returns_correct_uri(self):
+        os.environ["SUMMARIES_HOST"] = "summaries.example.com"
+        result = get_summary_uri("articles", "12345")
+        self.assertEqual(result, "https://summaries.example.com/articles/12345.rdf")
+        del os.environ["SUMMARIES_HOST"]
 
 
 if __name__ == "__main__":
