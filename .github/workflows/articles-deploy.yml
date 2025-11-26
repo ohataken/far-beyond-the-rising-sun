@@ -34,3 +34,6 @@ jobs:
         with:
           function-name: far-beyond-the-rising-sun-get-article
           code-artifacts-dir: articles
+          runtime: python3.14
+          handler: handler.handler
+          architecture: arm64
