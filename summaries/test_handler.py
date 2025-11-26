@@ -12,10 +12,10 @@ class TestHandler(unittest.TestCase):
         self.assertEqual(get_summaries_host(), "http://summaries.example.com")
         del os.environ["SUMMARIES_HOST"]
 
-    def test_get_summaries_host_returns_none_when_not_set(self):
+    def test_get_summaries_host_returns_default_when_not_set(self):
         if "SUMMARIES_HOST" in os.environ:
             del os.environ["SUMMARIES_HOST"]
-        self.assertIsNone(get_summaries_host())
+        self.assertEqual(get_summaries_host(), "example.com")
 
     def test_get_summary_uri_returns_correct_uri(self):
         os.environ["SUMMARIES_HOST"] = "summaries.example.com"

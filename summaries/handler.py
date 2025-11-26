@@ -3,7 +3,7 @@ import os
 
 
 def get_summaries_host():
-    return os.environ.get("SUMMARIES_HOST")
+    return os.environ.get("SUMMARIES_HOST", "example.com")
 
 
 def get_summary_uri(dir, id):
