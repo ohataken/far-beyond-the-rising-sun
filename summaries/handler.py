@@ -1,4 +1,9 @@
 import json
+import os
+
+
+def get_summaries_host():
+    return os.environ.get("SUMMARIES_HOST")
 
 
 def handler(event, context):
